@@ -96,10 +96,24 @@
         border: 1px solid var(--line);
         border-radius: 12px;
         padding: 12px;
-        min-height: 320px;
       }
       .chart-card h3 { margin: 0 0 10px; font-size: 15px; }
-      .chart-card.full { grid-column: 1 / -1; min-height: 360px; }
+      .chart-card.full { grid-column: 1 / -1; }
+      .chart-box {
+        position: relative;
+        width: 100%;
+        height: 150px;
+      }
+      .chart-card.full .chart-box {
+        height: 170px;
+      }
+      .empty-tip {
+        padding: 10px 12px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
       .kpi-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(140px, 1fr));
@@ -232,18 +246,25 @@
         <h2>3) 可视化分析</h2>
         <div class="chart-grid">
           <article class="chart-card">
-            <h3>能力覆盖雷达图（自动化/多渠道/知识库/集成/分析）</h3>
-            <canvas id="radarChart"></canvas>
+            <h3>能力维度对比（分组柱状图）</h3>
+            <div class="chart-box">
+              <canvas id="radarChart"></canvas>
+            </div>
           </article>
           <article class="chart-card">
-            <h3>综合评分（1-10）</h3>
-            <canvas id="scoreChart"></canvas>
+            <h3>动态评分（横向柱状图）</h3>
+            <div class="chart-box">
+              <canvas id="scoreChart"></canvas>
+            </div>
           </article>
           <article class="chart-card full">
             <h3>场景适配（中小企业 / 大企业复杂流程 / 中文本地化）</h3>
-            <canvas id="sceneChart"></canvas>
+            <div class="chart-box">
+              <canvas id="sceneChart"></canvas>
+            </div>
           </article>
         </div>
+        <div id="chartEmptyTip" class="empty-tip" style="display: none;">当前筛选条件下没有可展示数据，请调整筛选条件。</div>
       </section>
 
       <section>
@@ -434,12 +455,27 @@
 
       function drawCharts(items) {
         const labels = items.map(p => p.name);
+        const emptyTip = document.getElementById("chartEmptyTip");
         if (chartRefs.radar) chartRefs.radar.destroy();
         if (chartRefs.score) chartRefs.score.destroy();
         if (chartRefs.scene) chartRefs.scene.destroy();
+        if (!items.length) {
+          emptyTip.style.display = "block";
+          return;
+        }
+        emptyTip.style.display = "none";
+
+        const baseOptions = {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: { position: "bottom" }
+          }
+        };
 
         chartRefs.radar = new Chart(document.getElementById("radarChart"), {
-          type: "radar",
+          type: "bar",
           data: {
             labels: ["自动化", "多渠道", "知识库", "系统集成", "分析治理"],
             datasets: items.map((p, i) => ({
@@ -450,7 +486,12 @@
               borderColor: `hsl(${i * 60}, 75%, 45%)`
             }))
           },
-          options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 10 } } }
+          options: {
+            ...baseOptions,
+            scales: {
+              y: { min: 0, max: 10 }
+            }
+          }
         });
 
         chartRefs.score = new Chart(document.getElementById("scoreChart"), {
@@ -459,7 +500,11 @@
             labels,
             datasets: [{ label: "动态评分", data: items.map(p => p.dynamicScore), backgroundColor: "#3b82f6" }]
           },
-          options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 10 } } }
+          options: {
+            ...baseOptions,
+            indexAxis: "y",
+            scales: { x: { min: 0, max: 10 } }
+          }
         });
 
         chartRefs.scene = new Chart(document.getElementById("sceneChart"), {
@@ -472,7 +517,10 @@
               { label: "中文本地化", data: items.map(p => p.scene[2]), backgroundColor: "#1d4ed8" }
             ]
           },
-          options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 10 } } }
+          options: {
+            ...baseOptions,
+            scales: { y: { min: 0, max: 10 } }
+          }
         });
       }
 
