@@ -1,0 +1,216 @@
+{
+  "meta": {
+    "title": "AI客服竞品横评报告",
+    "track": "AI客服",
+    "scope": "中外混合",
+    "currencyNote": "报告同时包含美元与人民币报价，页面中按原币种展示，不做汇率折算。",
+    "updatedAt": "2026-04-16",
+    "method": "以公开资料为基础，对能力、渠道、自动化、分析、部署与商业灵活性六个维度进行10分制评估。"
+  },
+  "dimensions": [
+    "智能问答",
+    "多渠道接入",
+    "自动化流程",
+    "工单协同",
+    "分析报表",
+    "部署与扩展"
+  ],
+  "products": [
+    {
+      "name": "Intercom",
+      "region": "Global",
+      "website": "https://www.intercom.com",
+      "positioning": "AI-first 客户沟通与支持平台",
+      "targetCustomers": "SaaS、互联网、出海企业",
+      "pricingStart": "$29/seat/month",
+      "billingModel": "按座席 + AI分辨率计费",
+      "trialPolicy": "支持试用与演示",
+      "channels": [
+        "Web Chat",
+        "Email",
+        "In-app",
+        "Social integrations"
+      ],
+      "coreFeatures": [
+        "Fin AI Agent",
+        "Agent Copilot",
+        "知识库与工作流",
+        "全链路对话管理"
+      ],
+      "scores": {
+        "智能问答": 9.5,
+        "多渠道接入": 8.5,
+        "自动化流程": 9.0,
+        "工单协同": 8.0,
+        "分析报表": 8.5,
+        "部署与扩展": 8.5
+      },
+      "scenarioFit": {
+        "电商": 7.5,
+        "SaaS": 9.5,
+        "企业服务": 8.5
+      },
+      "sources": [
+        "https://www.intercom.com/pricing",
+        "https://www.intercom.com/pricing/calculator",
+        "https://www.intercom.com/help/en/articles/8344190-intercom-pricing-faqs"
+      ]
+    },
+    {
+      "name": "Zendesk AI",
+      "region": "Global",
+      "website": "https://www.zendesk.com",
+      "positioning": "企业级客服平台 + 智能Agent",
+      "targetCustomers": "中大型企业、跨国企业",
+      "pricingStart": "$55/agent/month",
+      "billingModel": "按座席订阅 + AI增值包",
+      "trialPolicy": "支持试用",
+      "channels": [
+        "Email",
+        "Messaging",
+        "Voice",
+        "Social"
+      ],
+      "coreFeatures": [
+        "AI Agents",
+        "Copilot",
+        "智能路由",
+        "知识库驱动自动化"
+      ],
+      "scores": {
+        "智能问答": 9.0,
+        "多渠道接入": 9.0,
+        "自动化流程": 9.0,
+        "工单协同": 9.5,
+        "分析报表": 8.5,
+        "部署与扩展": 9.0
+      },
+      "scenarioFit": {
+        "电商": 8.0,
+        "SaaS": 9.0,
+        "企业服务": 9.5
+      },
+      "sources": [
+        "https://www.zendesk.com/ai",
+        "https://www.zendesk.com/service/ai"
+      ]
+    },
+    {
+      "name": "Freshdesk + Freddy AI",
+      "region": "Global",
+      "website": "https://www.freshworks.com/freshdesk",
+      "positioning": "中小企业友好的AI客服套件",
+      "targetCustomers": "中小企业、成长型团队",
+      "pricingStart": "Freddy Copilot $29/agent/month",
+      "billingModel": "平台订阅 + AI增购包",
+      "trialPolicy": "支持试用",
+      "channels": [
+        "Email",
+        "Chat",
+        "Phone",
+        "Messaging apps"
+      ],
+      "coreFeatures": [
+        "Freddy Copilot",
+        "Freddy AI Agent",
+        "工单自动化",
+        "会话总结与情绪分析"
+      ],
+      "scores": {
+        "智能问答": 8.5,
+        "多渠道接入": 8.5,
+        "自动化流程": 8.5,
+        "工单协同": 8.5,
+        "分析报表": 8.0,
+        "部署与扩展": 8.0
+      },
+      "scenarioFit": {
+        "电商": 8.0,
+        "SaaS": 8.5,
+        "企业服务": 7.5
+      },
+      "sources": [
+        "https://support.freshdesk.com/en/support/solutions/articles/50000011515-manage-freddy-ai-add-ons",
+        "https://crmsupport.freshworks.com/support/solutions/articles/50000009124-understanding-freddy-ai-features-and-pricing"
+      ]
+    },
+    {
+      "name": "网易七鱼",
+      "region": "China",
+      "website": "https://www.qiyukf.com",
+      "positioning": "国内企业常用的全渠道智能客服",
+      "targetCustomers": "中大型企业、零售与服务业",
+      "pricingStart": "在线客服标准版约1888元/坐席/年",
+      "billingModel": "按坐席/版本/年付",
+      "trialPolicy": "支持企业咨询与演示",
+      "channels": [
+        "Web",
+        "App",
+        "微信",
+        "小程序"
+      ],
+      "coreFeatures": [
+        "在线客服",
+        "智能机器人",
+        "工单系统",
+        "数据报表与质检"
+      ],
+      "scores": {
+        "智能问答": 8.0,
+        "多渠道接入": 8.5,
+        "自动化流程": 8.0,
+        "工单协同": 8.5,
+        "分析报表": 8.5,
+        "部署与扩展": 7.5
+      },
+      "scenarioFit": {
+        "电商": 9.0,
+        "SaaS": 7.5,
+        "企业服务": 8.5
+      },
+      "sources": [
+        "https://www.qiyukf163.cn/price.html",
+        "https://www.qiyukf163.cn/price/robot.html"
+      ]
+    },
+    {
+      "name": "Udesk",
+      "region": "China/Global",
+      "website": "https://www.udesk.cn",
+      "positioning": "全渠道客服+呼叫中心+AI一体化",
+      "targetCustomers": "中大型企业、跨境团队",
+      "pricingStart": "国际版约$64/month起（年付）",
+      "billingModel": "按套餐/年付，国内常见项目制",
+      "trialPolicy": "支持试用",
+      "channels": [
+        "Web",
+        "社媒",
+        "企业IM",
+        "电话"
+      ],
+      "coreFeatures": [
+        "全渠道接入",
+        "AI文本/语音机器人",
+        "工单与呼叫中心",
+        "BI分析"
+      ],
+      "scores": {
+        "智能问答": 8.0,
+        "多渠道接入": 9.0,
+        "自动化流程": 8.5,
+        "工单协同": 8.5,
+        "分析报表": 8.0,
+        "部署与扩展": 8.0
+      },
+      "scenarioFit": {
+        "电商": 8.5,
+        "SaaS": 7.5,
+        "企业服务": 8.5
+      },
+      "sources": [
+        "https://www.udesk.cn/feature_udesk.html",
+        "https://www.udeskglobal.com/pricing"
+      ]
+    }
+  ]
+}

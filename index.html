@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI客服竞品横评报告</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header class="container hero">
+      <article class="task-card">
+        <div class="task-head">
+          <span class="task-index">1</span>
+          <span class="task-type">HTML可视化报告</span>
+        </div>
+        <h1>AI竞品横评网页</h1>
+        <p class="task-desc">
+          选一个AI细分赛道（如AI写作/AI客服），在 Cursor 里直接让 AI 联网调研 5 个产品，
+          再对话生成带图表和对比表的完整 HTML 报告页。
+        </p>
+        <p class="task-tools">主工具：Cursor / Codex / Claude Code · 发布：GitHub Pages</p>
+        <div class="task-tags">
+          <span>竞品分析</span>
+          <span>数据分析</span>
+          <span>了解大模型</span>
+          <span>会用AI工具</span>
+        </div>
+        <p class="task-time">1-2天可完成</p>
+      </article>
+      <p id="metaLine" class="muted"></p>
+      <p class="description">
+        选取中外 5 款 AI 客服产品进行统一维度比较，输出产品总览、能力对比表、可视化图表与选型建议。
+      </p>
+    </header>
+
+    <main class="container">
+      <section>
+        <h2>竞品总览</h2>
+        <div id="productCards" class="cards"></div>
+      </section>
+
+      <section>
+        <h2>关键维度对比表</h2>
+        <div class="table-wrap">
+          <table id="compareTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="charts">
+        <h2>可视化分析</h2>
+        <div class="chart-grid">
+          <article class="chart-card">
+            <h3>能力覆盖（雷达图）</h3>
+            <canvas id="radarChart"></canvas>
+          </article>
+          <article class="chart-card">
+            <h3>综合评分（柱状图）</h3>
+            <canvas id="barChart"></canvas>
+          </article>
+          <article class="chart-card">
+            <h3>场景适配度（分组柱状图）</h3>
+            <canvas id="scenarioChart"></canvas>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>结论与选型建议</h2>
+        <div id="conclusions" class="conclusion-grid"></div>
+      </section>
+
+      <section>
+        <h2>研究方法与信息来源</h2>
+        <p id="methodText" class="muted"></p>
+        <ul id="sourceList" class="source-list"></ul>
+      </section>
+    </main>
+
+    <footer class="container footer">
+      <p>该页面为静态 HTML 报告，可直接部署到 GitHub Pages。</p>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
