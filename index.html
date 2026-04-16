@@ -3,87 +3,510 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI客服竞品横评报告</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <title>AI 客服竞品横评报告（5款）</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --bg: #f6f8fc;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --brand: #2563eb;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: var(--text);
+        background: var(--bg);
+      }
+      .top-nav {
+        background: #111827;
+        color: #e5e7eb;
+        border-bottom: 1px solid #1f2937;
+      }
+      .top-nav .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+      }
+      .brand { font-size: 14px; font-weight: 600; }
+      .menu { display: flex; gap: 14px; font-size: 13px; }
+      .menu a { color: #cbd5e1; text-decoration: none; }
+      .menu a:hover { color: #ffffff; }
+      .container { width: min(1120px, 92vw); margin: 0 auto; }
+      .hero { padding: 28px 0 10px; }
+      .hero h1 { margin: 0 0 8px; font-size: 30px; }
+      .hero p { margin: 6px 0; color: var(--muted); }
+      .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #dbeafe;
+        color: #1e40af;
+        font-size: 12px;
+      }
+      section {
+        margin: 16px 0;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 18px;
+      }
+      h2 { margin: 0 0 14px; font-size: 22px; }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+      }
+      .card h3 { margin: 0 0 6px; font-size: 16px; }
+      .card p { margin: 5px 0; color: var(--muted); font-size: 13px; }
+      .pill {
+        display: inline-block;
+        margin-right: 6px;
+        margin-top: 6px;
+        padding: 2px 8px;
+        border: 1px solid #bfdbfe;
+        border-radius: 999px;
+        font-size: 12px;
+        color: #1d4ed8;
+      }
+      .table-wrap { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 920px; }
+      th, td {
+        border: 1px solid var(--line);
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th { background: #f3f6fd; }
+      .chart-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .chart-card {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        min-height: 320px;
+      }
+      .chart-card h3 { margin: 0 0 10px; font-size: 15px; }
+      .chart-card.full { grid-column: 1 / -1; min-height: 360px; }
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(140px, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .kpi {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        background: #fff;
+      }
+      .kpi b { display: block; font-size: 20px; margin-bottom: 4px; }
+      .kpi span { color: var(--muted); font-size: 12px; }
+      .control-row {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 10px;
+        align-items: center;
+      }
+      .control-row select, .control-row button {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 10px;
+        background: #fff;
+      }
+      .weight-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+      .weight-tabs button.active {
+        background: #2563eb;
+        color: #fff;
+        border-color: #2563eb;
+      }
+      .conclusion {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+      }
+      .conclusion > div {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+      }
+      .conclusion strong { display: block; margin-bottom: 5px; }
+      .sources { margin: 0; padding-left: 18px; }
+      .sources li { margin-bottom: 6px; color: var(--muted); }
+      .sources a { color: var(--brand); text-decoration: none; }
+      .sources a:hover { text-decoration: underline; }
+      footer {
+        color: var(--muted);
+        font-size: 12px;
+        padding: 10px 0 24px;
+      }
+      @media (max-width: 860px) {
+        .chart-grid { grid-template-columns: 1fr; }
+        .kpi-grid { grid-template-columns: 1fr 1fr; }
+        .control-row { grid-template-columns: 1fr; }
+        .top-nav .container { flex-direction: column; gap: 8px; align-items: flex-start; }
+      }
+    </style>
   </head>
   <body>
+    <nav class="top-nav">
+      <div class="container">
+        <div class="brand">中国本土 AI 客服选型站</div>
+        <div class="menu">
+          <a href="#overview">竞品总览</a>
+          <a href="#table">对比表</a>
+          <a href="#charts">可视化</a>
+          <a href="#sourcesSec">信息源</a>
+        </div>
+      </div>
+    </nav>
     <header class="container hero">
-      <article class="task-card">
-        <div class="task-head">
-          <span class="task-index">1</span>
-          <span class="task-type">HTML可视化报告</span>
-        </div>
-        <h1>AI竞品横评网页</h1>
-        <p class="task-desc">
-          选一个AI细分赛道（如AI写作/AI客服），在 Cursor 里直接让 AI 联网调研 5 个产品，
-          再对话生成带图表和对比表的完整 HTML 报告页。
-        </p>
-        <p class="task-tools">主工具：Cursor / Codex / Claude Code · 发布：GitHub Pages</p>
-        <div class="task-tags">
-          <span>竞品分析</span>
-          <span>数据分析</span>
-          <span>了解大模型</span>
-          <span>会用AI工具</span>
-        </div>
-        <p class="task-time">1-2天可完成</p>
-      </article>
-      <p id="metaLine" class="muted"></p>
-      <p class="description">
-        选取中外 5 款 AI 客服产品进行统一维度比较，输出产品总览、能力对比表、可视化图表与选型建议。
-      </p>
+      <span class="badge">联网调研 + 自动生成报告</span>
+      <h1>中国本土 AI 客服竞品横评报告（2026-04）</h1>
+      <p>评测对象：阿里云云小蜜、腾讯云智能客服、百度智能云客悦、智齿科技、Udesk</p>
+      <p>方法：基于公开网页信息进行统一维度打分（1-10），用于选型初筛，不替代企业 PoC。</p>
+      <div class="kpi-grid" id="kpiGrid"></div>
     </header>
 
     <main class="container">
-      <section>
-        <h2>竞品总览</h2>
-        <div id="productCards" class="cards"></div>
+      <section id="overview">
+        <h2>1) 竞品总览</h2>
+        <div class="control-row">
+          <select id="filterSelect">
+            <option value="all">全部厂商</option>
+            <option value="阿里生态">阿里生态</option>
+            <option value="腾讯生态">腾讯生态</option>
+            <option value="私有化">私有化</option>
+            <option value="一体化">一体化</option>
+            <option value="全渠道">全渠道</option>
+          </select>
+          <select id="sortSelect">
+            <option value="scoreDesc">按综合分降序</option>
+            <option value="scoreAsc">按综合分升序</option>
+            <option value="name">按名称</option>
+          </select>
+          <div class="weight-tabs">
+            <button data-mode="balanced" class="active">均衡视角</button>
+            <button data-mode="smb">中小企业优先</button>
+            <button data-mode="enterprise">大型企业优先</button>
+            <button data-mode="local">本地化优先</button>
+          </div>
+        </div>
+        <div id="cards" class="cards"></div>
       </section>
 
-      <section>
-        <h2>关键维度对比表</h2>
+      <section id="table">
+        <h2>2) 关键维度对比表</h2>
         <div class="table-wrap">
-          <table id="compareTable">
-            <thead></thead>
-            <tbody></tbody>
+          <table>
+            <thead>
+              <tr>
+                <th>产品</th>
+                <th>定位</th>
+                <th>核心 AI 能力</th>
+                <th>接入与生态</th>
+                <th>定价信号</th>
+                <th>优点</th>
+                <th>短板/风险</th>
+                <th>综合分</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
           </table>
         </div>
       </section>
 
-      <section class="charts">
-        <h2>可视化分析</h2>
+      <section id="charts">
+        <h2>3) 可视化分析</h2>
         <div class="chart-grid">
           <article class="chart-card">
-            <h3>能力覆盖（雷达图）</h3>
+            <h3>能力覆盖雷达图（自动化/多渠道/知识库/集成/分析）</h3>
             <canvas id="radarChart"></canvas>
           </article>
           <article class="chart-card">
-            <h3>综合评分（柱状图）</h3>
-            <canvas id="barChart"></canvas>
+            <h3>综合评分（1-10）</h3>
+            <canvas id="scoreChart"></canvas>
           </article>
-          <article class="chart-card">
-            <h3>场景适配度（分组柱状图）</h3>
-            <canvas id="scenarioChart"></canvas>
+          <article class="chart-card full">
+            <h3>场景适配（中小企业 / 大企业复杂流程 / 中文本地化）</h3>
+            <canvas id="sceneChart"></canvas>
           </article>
         </div>
       </section>
 
       <section>
-        <h2>结论与选型建议</h2>
-        <div id="conclusions" class="conclusion-grid"></div>
+        <h2>4) 结论与选型建议</h2>
+        <div class="conclusion">
+          <div>
+            <strong>预算敏感 + 快速起步</strong>
+            优先看 `阿里云云小蜜（敏捷版）` 与 `腾讯云轻量方案`，都有清晰入门档，适合先跑小规模验证。
+          </div>
+          <div>
+            <strong>复杂流程 + 多部门协同</strong>
+            `智齿科技` 与 `Udesk` 在客服、工单、呼叫中心一体化上更完整，更适合中大型企业全链路落地。
+          </div>
+          <div>
+            <strong>中文知识问答 + 本地化部署诉求</strong>
+            `百度智能云客悦` 与 `阿里云云小蜜` 更强调中文语义理解和可配置对话流程，适合政企与本地业务场景。
+          </div>
+          <div>
+            <strong>落地建议</strong>
+            建议按 2-4 周 PoC 验证：`机器人独立解决率`、`人工接管率`、`平均处理时长`、`单咨询成本`，再做正式采购。
+          </div>
+        </div>
       </section>
 
-      <section>
-        <h2>研究方法与信息来源</h2>
-        <p id="methodText" class="muted"></p>
-        <ul id="sourceList" class="source-list"></ul>
+      <section id="sourcesSec">
+        <h2>5) 信息来源（公开网页）</h2>
+        <ul class="sources" id="sources"></ul>
       </section>
     </main>
 
-    <footer class="container footer">
-      <p>该页面为静态 HTML 报告，可直接部署到 GitHub Pages。</p>
+    <footer class="container">
+      本页由 AI 生成，最后更新：<span id="updatedAt"></span>。注：不同厂商计费口径不同（按座席/并发/调用量/资源包），请以官方报价与合同为准。
     </footer>
 
-    <script src="./app.js"></script>
+    <script>
+      const products = [
+        {
+          name: "阿里云云小蜜（通义版）",
+          positioning: "阿里云体系内的智能对话机器人，面向多行业客服场景",
+          abilities: "知识库问答、多轮流程、API 插件、渠道部署、数据报表",
+          ecosystem: "与阿里云产品与开放接口衔接顺畅",
+          pricing: "敏捷版 880元/月；标准版 5999元/月；调用增购 0.015元/次",
+          strengths: "价格档位清晰、中文语义和云生态能力成熟",
+          risks: "高阶能力在高版本，部分场景需较多运营配置",
+          score: 8.6,
+          radar: [8, 8, 8, 8, 8],
+          scene: [8, 8, 9],
+          tags: ["阿里生态", "中文场景", "价格透明"]
+        },
+        {
+          name: "腾讯云智能客服（企点/文本机器人）",
+          positioning: "依托腾讯生态的多渠道智能客服与联络能力",
+          abilities: "7x24机器人接待、多轮对话、全渠道接入、告警与报表",
+          ecosystem: "微信、QQ、小程序等腾讯生态接入优势明显",
+          pricing: "企点在线坐席基础版约999元/用户/年；其他版本按模块与用量计费",
+          strengths: "社交渠道触达能力强，适配零售与互联网场景",
+          risks: "不同产品线计费口径差异大，采购前需精算",
+          score: 8.4,
+          radar: [8, 9, 7, 8, 7],
+          scene: [8, 8, 8],
+          tags: ["腾讯生态", "多渠道", "触达强"]
+        },
+        {
+          name: "百度智能云客悦",
+          positioning: "以大模型能力驱动的企业智能客服平台",
+          abilities: "任务式会话、表格问答、多渠道接入、支持私有化部署",
+          ecosystem: "可与企业业务系统对接，支持在线客服与语音场景",
+          pricing: "官网以咨询为主，市场公开资料多为项目制/年框报价",
+          strengths: "中文理解与对话能力突出，适合政企和复杂知识问答",
+          risks: "公开价格透明度一般，落地成本依赖实施范围",
+          score: 8.3,
+          radar: [8, 8, 9, 7, 8],
+          scene: [7, 8, 9],
+          tags: ["文心能力", "私有化", "政企友好"]
+        },
+        {
+          name: "智齿科技",
+          positioning: "大模型驱动的一体化客户联络中心方案",
+          abilities: "AI Agent、AI Copilot、AI Insight + 在线/语音/工单一体化",
+          ecosystem: "支持多模型接入与多行业模板，含软件+BPO能力",
+          pricing: "以资源包与方案报价为主，通常按企业规模与场景定制",
+          strengths: "产品矩阵完整，适合服务+营销+管理一体化建设",
+          risks: "中小团队需控制功能范围，避免初期建设过重",
+          score: 8.8,
+          radar: [9, 9, 8, 8, 9],
+          scene: [8, 9, 8],
+          tags: ["一体化", "大模型能力强", "行业方案丰富"]
+        },
+        {
+          name: "Udesk（沃丰科技）",
+          positioning: "全渠道智能客服与联络中心平台",
+          abilities: "AI Agent 闭环处理、全渠道接入、情感分析、工单协同",
+          ecosystem: "支持国内外渠道连接，适配客服与呼叫中心场景",
+          pricing: "常见按年框与能力层级报价，公开内容多为区间参考",
+          strengths: "全渠道能力和运营实践成熟，适合持续迭代型团队",
+          risks: "官方公开标准价有限，实际成本需结合定制范围核算",
+          score: 8.5,
+          radar: [8, 9, 8, 8, 8],
+          scene: [8, 8, 8],
+          tags: ["全渠道", "企业服务", "可扩展"]
+        }
+      ];
+
+      const sources = [
+        { name: "阿里云：智能对话机器人产品页", url: "https://www.alibabacloud.com/zh/product/bot" },
+        { name: "阿里云：通义版计费说明", url: "https://help.aliyun.com/zh/beebot/intelligent-dialogue-robot-tongyi-version/product-overview/resource-limits-and-free-quota" },
+        { name: "腾讯云：企点客服计费概述", url: "https://cloud.tencent.com/document/product/1177/40561" },
+        { name: "腾讯云：文本机器人解决方案", url: "https://cloud.tencent.com/solution/cloudcustomerservice" },
+        { name: "百度智能云：客悦智能客服企业版", url: "https://cloud.baidu.com/product/ai-ics.html" },
+        { name: "智齿科技官网", url: "https://zhichi.com/" },
+        { name: "Udesk 选型指南（官方文章）", url: "https://www.udesk.cn/ucm/faq/67469" }
+      ];
+
+      let currentMode = "balanced";
+      let currentFilter = "all";
+      let currentSort = "scoreDesc";
+      let chartRefs = { radar: null, score: null, scene: null };
+
+      const scoreMode = {
+        balanced: [0.4, 0.4, 0.2],
+        smb: [0.6, 0.25, 0.15],
+        enterprise: [0.2, 0.65, 0.15],
+        local: [0.2, 0.2, 0.6]
+      };
+
+      function getDynamicScore(p) {
+        const [a, b, c] = scoreMode[currentMode];
+        const sceneScore = p.scene[0] * a + p.scene[1] * b + p.scene[2] * c;
+        return Number((p.score * 0.7 + sceneScore / 10 * 3).toFixed(2));
+      }
+
+      function getCurrentProducts() {
+        const filtered = products
+          .filter((p) => currentFilter === "all" || p.tags.includes(currentFilter))
+          .map((p) => ({ ...p, dynamicScore: getDynamicScore(p) }));
+
+        if (currentSort === "scoreDesc") filtered.sort((a, b) => b.dynamicScore - a.dynamicScore);
+        if (currentSort === "scoreAsc") filtered.sort((a, b) => a.dynamicScore - b.dynamicScore);
+        if (currentSort === "name") filtered.sort((a, b) => a.name.localeCompare(b.name, "zh-CN"));
+        return filtered;
+      }
+
+      function renderKpi(items) {
+        const avgScore = (items.reduce((s, p) => s + p.dynamicScore, 0) / items.length || 0).toFixed(2);
+        const top = items[0]?.name || "-";
+        const bestLocal = [...items].sort((a, b) => b.scene[2] - a.scene[2])[0]?.name || "-";
+        const transparentPricing = items.filter((p) => !p.pricing.includes("咨询")).length;
+        document.getElementById("kpiGrid").innerHTML = `
+          <div class="kpi"><b>${items.length}</b><span>当前展示厂商数</span></div>
+          <div class="kpi"><b>${avgScore}</b><span>平均动态评分</span></div>
+          <div class="kpi"><b>${top}</b><span>当前排序第一名</span></div>
+          <div class="kpi"><b>${transparentPricing}</b><span>有公开价格信号厂商</span></div>
+        `;
+      }
+
+      function renderCards(items) {
+        document.getElementById("cards").innerHTML = items.map(p => `
+          <article class="card">
+            <h3>${p.name}</h3>
+            <p><b>定位：</b>${p.positioning}</p>
+            <p><b>定价：</b>${p.pricing}</p>
+            <p><b>动态分：</b>${p.dynamicScore}</p>
+            <p>${p.tags.map(t => `<span class="pill">${t}</span>`).join("")}</p>
+          </article>
+        `).join("");
+      }
+
+      function renderTable(items) {
+        document.getElementById("tbody").innerHTML = items.map(p => `
+          <tr>
+            <td>${p.name}</td>
+            <td>${p.positioning}</td>
+            <td>${p.abilities}</td>
+            <td>${p.ecosystem}</td>
+            <td>${p.pricing}</td>
+            <td>${p.strengths}</td>
+            <td>${p.risks}</td>
+            <td><b>${p.dynamicScore}</b></td>
+          </tr>
+        `).join("");
+      }
+
+      function renderSources() {
+        document.getElementById("sources").innerHTML = sources.map(s => `
+          <li><a href="${s.url}" target="_blank" rel="noreferrer">${s.name}</a></li>
+        `).join("");
+      }
+
+      function drawCharts(items) {
+        const labels = items.map(p => p.name);
+        if (chartRefs.radar) chartRefs.radar.destroy();
+        if (chartRefs.score) chartRefs.score.destroy();
+        if (chartRefs.scene) chartRefs.scene.destroy();
+
+        chartRefs.radar = new Chart(document.getElementById("radarChart"), {
+          type: "radar",
+          data: {
+            labels: ["自动化", "多渠道", "知识库", "系统集成", "分析治理"],
+            datasets: items.map((p, i) => ({
+              label: p.name,
+              data: p.radar,
+              borderWidth: 2,
+              backgroundColor: `hsla(${i * 60}, 75%, 55%, 0.12)`,
+              borderColor: `hsl(${i * 60}, 75%, 45%)`
+            }))
+          },
+          options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 10 } } }
+        });
+
+        chartRefs.score = new Chart(document.getElementById("scoreChart"), {
+          type: "bar",
+          data: {
+            labels,
+            datasets: [{ label: "动态评分", data: items.map(p => p.dynamicScore), backgroundColor: "#3b82f6" }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 10 } } }
+        });
+
+        chartRefs.scene = new Chart(document.getElementById("sceneChart"), {
+          type: "bar",
+          data: {
+            labels,
+            datasets: [
+              { label: "中小企业", data: items.map(p => p.scene[0]), backgroundColor: "#60a5fa" },
+              { label: "大企业复杂流程", data: items.map(p => p.scene[1]), backgroundColor: "#2563eb" },
+              { label: "中文本地化", data: items.map(p => p.scene[2]), backgroundColor: "#1d4ed8" }
+            ]
+          },
+          options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 10 } } }
+        });
+      }
+
+      function bindEvents() {
+        document.getElementById("filterSelect").addEventListener("change", (e) => {
+          currentFilter = e.target.value;
+          refresh();
+        });
+        document.getElementById("sortSelect").addEventListener("change", (e) => {
+          currentSort = e.target.value;
+          refresh();
+        });
+        document.querySelectorAll(".weight-tabs button").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentMode = btn.dataset.mode;
+            document.querySelectorAll(".weight-tabs button").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            refresh();
+          });
+        });
+      }
+
+      function refresh() {
+        const items = getCurrentProducts();
+        renderKpi(items);
+        renderCards(items);
+        renderTable(items);
+        drawCharts(items);
+      }
+
+      bindEvents();
+      renderSources();
+      refresh();
+      document.getElementById("updatedAt").textContent = new Date().toLocaleString("zh-CN");
+    </script>
   </body>
 </html>
