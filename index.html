@@ -246,7 +246,7 @@
         <h2>3) 可视化分析</h2>
         <div class="chart-grid">
           <article class="chart-card">
-            <h3>能力维度对比（分组柱状图）</h3>
+            <h3>能力均值总览（雷达图）</h3>
             <div class="chart-box">
               <canvas id="radarChart"></canvas>
             </div>
@@ -475,21 +475,28 @@
         };
 
         chartRefs.radar = new Chart(document.getElementById("radarChart"), {
-          type: "bar",
+          type: "radar",
           data: {
             labels: ["自动化", "多渠道", "知识库", "系统集成", "分析治理"],
-            datasets: items.map((p, i) => ({
-              label: p.name,
-              data: p.radar,
+            datasets: [{
+              label: "厂商能力均值",
+              data: [
+                Number((items.reduce((sum, p) => sum + p.radar[0], 0) / items.length).toFixed(2)),
+                Number((items.reduce((sum, p) => sum + p.radar[1], 0) / items.length).toFixed(2)),
+                Number((items.reduce((sum, p) => sum + p.radar[2], 0) / items.length).toFixed(2)),
+                Number((items.reduce((sum, p) => sum + p.radar[3], 0) / items.length).toFixed(2)),
+                Number((items.reduce((sum, p) => sum + p.radar[4], 0) / items.length).toFixed(2))
+              ],
               borderWidth: 2,
-              backgroundColor: `hsla(${i * 60}, 75%, 55%, 0.12)`,
-              borderColor: `hsl(${i * 60}, 75%, 45%)`
-            }))
+              backgroundColor: "rgba(59,130,246,0.18)",
+              borderColor: "#2563eb",
+              pointBackgroundColor: "#1d4ed8"
+            }]
           },
           options: {
             ...baseOptions,
             scales: {
-              y: { min: 0, max: 10 }
+              r: { min: 0, max: 10, ticks: { stepSize: 2, backdropColor: "transparent" } }
             }
           }
         });
@@ -503,7 +510,8 @@
           options: {
             ...baseOptions,
             indexAxis: "y",
-            scales: { x: { min: 0, max: 10 } }
+            plugins: { ...baseOptions.plugins, legend: { display: false } },
+            scales: { x: { min: 0, max: 10, ticks: { stepSize: 1 } } }
           }
         });
 
@@ -519,6 +527,7 @@
           },
           options: {
             ...baseOptions,
+            plugins: { ...baseOptions.plugins, legend: { position: "top" } },
             scales: { y: { min: 0, max: 10 } }
           }
         });
